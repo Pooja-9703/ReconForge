@@ -48,6 +48,10 @@ class HTTPModule(ReconModule):
 
             target.results.http.status_code = response.status_code
             target.results.http.server = response.headers.get("Server")
+            target.results.http.headers = {
+                key: value
+                for key, value in response.headers.items()
+            }
 
             content_type = response.headers.get("Content-Type")
 

@@ -19,6 +19,9 @@ from reconforge.modules.portscan import PortScanner
 from reconforge.modules.whois import WHOISModule
 from reconforge.modules.technology import TechnologyModule
 
+from reconforge.analyzers.analyzer import FindingAnalyzer
+from reconforge.display.findings import display_findings
+
 console = Console()
 
 
@@ -45,6 +48,8 @@ class ScanOrchestrator:
             Logger.info(f"Running {module.name}...")
             module.run(target)
 
+        target.results.findings = FindingAnalyzer.analyze(target)
+
         console.rule("[bold cyan]ReconForge")
 
         display_target(target)
@@ -54,6 +59,7 @@ class ScanOrchestrator:
         display_ports(target)
         display_whois(target)
         display_technology(target)
+        display_findings(target)
         
         Logger.success("Validation complete.")
         return target

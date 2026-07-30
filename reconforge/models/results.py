@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-
+from reconforge.models.finding import Finding
 
 @dataclass(slots=True)
 class DNSResult:
@@ -25,6 +25,8 @@ class HTTPResult:
     redirect_url: str | None = None
     title: str | None = None
     response_time: float | None = None
+
+    headers: dict[str, str] = field(default_factory=dict)
 
 @dataclass(slots=True)
 class TLSResult:
@@ -74,3 +76,5 @@ class ScanResults:
     ports: PortScanResult = field(default_factory=PortScanResult)
     whois: WHOISResult = field(default_factory=WHOISResult)
     technology: TechnologyResult = field(default_factory=TechnologyResult)
+
+    findings: list[Finding] = field(default_factory=list)
